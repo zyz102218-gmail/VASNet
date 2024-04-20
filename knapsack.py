@@ -1,9 +1,12 @@
 # A Dynamic Programming based Python Program for 0-1 Knapsack problem
 # Returns the maximum value that can be put in a knapsack of capacity W
 import numpy as np
-from ortools.algorithms import pywrapknapsack_solver
-
-
+# from ortools.algorithms import pywrapknapsack_solver      # 旧版本用法
+from ortools.algorithms.python import knapsack_solver as pywrapknapsack_solver # 解决版本问题
+from ortools.algorithms.python.knapsack_solver import SolverType
+"""
+Editted code by: Dill Zhu, June, 2024 to satisfy the requirements of the project in Python 3.10
+"""
 def knapsack(W, wt, val, n):
     K = [[0 for x in range(W+1)] for x in range(n+1)]
 
@@ -132,21 +135,27 @@ def test_knapsack_dp():
 
 osolver = pywrapknapsack_solver.KnapsackSolver(
     # pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_BRANCH_AND_BOUND_SOLVER,
-    pywrapknapsack_solver.KnapsackSolver.KNAPSACK_DYNAMIC_PROGRAMMING_SOLVER,
+    SolverType.KNAPSACK_DYNAMIC_PROGRAMMING_SOLVER,
     'test')
 
 def knapsack_ortools(values, weights, items, capacity ):
     scale = 1000
     values = np.array(values)
     weights = np.array(weights)
-    values = (values * scale).astype(np.int)
-    weights = (weights).astype(np.int)
+    # values = (values * scale).astype(np.int)
+    values = (values * scale).astype(int) # np.int已经废弃，现在使用int类型即可
+    # weights = (weights).astype(np.int)
+    weights = (weights).astype(int)
     capacity = capacity
 
-    osolver.Init(values.tolist(), [weights.tolist()], [capacity])
-    computed_value = osolver.Solve()
+    # osolver.Init(values.tolist(), [weights.tolist()], [capacity]) # 旧版本
+    osolver.init(values.tolist(), [weights.tolist()], [capacity])
+    # computed_value = osolver.Solve()
+    computed_value = osolver.solve()
+    # packed_items = [x for x in range(0, len(weights))
+    #                 if osolver.BestSolutionContains(x)] # 旧版本
     packed_items = [x for x in range(0, len(weights))
-                    if osolver.BestSolutionContains(x)]
+                    if osolver.best_solution_contains(x)]
 
     return packed_items
 
