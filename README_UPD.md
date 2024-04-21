@@ -14,6 +14,8 @@ Torch是具备跨版本能力的，经过测试我们发现现版本torch可以�
 参考文档：[ortools-官方文档](https://or-tools.github.io/docs/pdoc/ortools/algorithms/python/knapsack_solver.html#KnapsackSolver)
 
 ## 测试环境
+
+### CUDA
 ```bash
 ackages & system versions:
 ----------------------------------------------------------------------
@@ -47,7 +49,23 @@ torchvision        0.17.2
 numpy              1.26.4
 ortools            9.9.3963
 ```
+
+### macOS
+```bash
+cuda :  NA
+cudnn :  None
+platform :  macOS-14.4.1-arm64-arm-64bit
+python :  (3, 10, 14)
+torch :  2.2.2
+numpy :  1.26.4
+h5py :  3.11.0
+json :  2.0.9
+ortools :  9.9.3963
+torchvision :  0.17.2
+```
+实际运行平台：Macbook Air M2 8GB (macOS 14.4.1 23E224 arm64)
 ## 运行结果
+### CUDA 
 ```bash
 Packages & system versions:
 ----------------------------------------------------------------------
@@ -208,9 +226,165 @@ Final Results:
   4    splits/summe_aug_splits.json         51.11%  
 ------------------------------------------------------
 ```
+### macOS
+```bash
+Packages & system versions:
+----------------------------------------------------------------------
+display :  	cat: /proc/driver/nvidia/version: No such file or directory
+cuda :  NA
+cudnn :  None
+platform :  macOS-14.4.1-arm64-arm-64bit
+python :  (3, 10, 14)
+torch :  2.2.2
+numpy :  1.26.4
+h5py :  3.11.0
+json :  2.0.9
+ortools :  9.9.3963
+torchvision :  0.17.2
 
+Parameters:
+----------------------------------------------------------------------
+[0] cuda_device: 0
+[1] datasets: ['datasets/eccv16_dataset_summe_google_pool5.h5', 'datasets/eccv16_dataset_tvsum_google_pool5.h5', 'datasets/eccv16_dataset_ovp_google_pool5.h5', 'datasets/eccv16_dataset_youtube_google_pool5.h5']
+[2] epochs_max: 300
+[3] l2_req: 1e-05
+[4] lr: [5e-05]
+[5] lr_epochs: [0]
+[6] max_summary_length: 0.15
+[7] output_dir: data
+[8] root: 
+[9] splits: ['splits/tvsum_splits.json', 'splits/summe_splits.json', 'splits/tvsum_aug_splits.json', 'splits/summe_aug_splits.json']
+[10] train: False
+[11] train_batch_size: 1
+[12] use_cuda: True
+[13] verbose: False
+
+
+
+Loading: datasets/eccv16_dataset_summe_google_pool5.h5
+Loading: datasets/eccv16_dataset_tvsum_google_pool5.h5
+Loading: datasets/eccv16_dataset_ovp_google_pool5.h5
+Loading: datasets/eccv16_dataset_youtube_google_pool5.h5
+Loading splits from:  splits/tvsum_splits.json
+Selecting split:  0
+Loading model: data/models/tvsum_splits_0_0.6133250787356799.tar.pth
+Avg F-score:  0.6133250787356799
+
+Selecting split:  1
+Loading model: data/models/tvsum_splits_1_0.6353969877811061.tar.pth
+Avg F-score:  0.6353969877811061
+
+Selecting split:  2
+Loading model: data/models/tvsum_splits_2_0.5867147987152299.tar.pth
+Avg F-score:  0.5867147987152299
+
+Selecting split:  3
+Loading model: data/models/tvsum_splits_3_0.6417678540081985.tar.pth
+Avg F-score:  0.6417678540081985
+
+Selecting split:  4
+Loading model: data/models/tvsum_splits_4_0.5941821875878188.tar.pth
+Avg F-score:  0.5941821875878188
+
+Total AVG F-score:  0.6142773813656067
+
+
+Loading: datasets/eccv16_dataset_summe_google_pool5.h5
+Loading: datasets/eccv16_dataset_tvsum_google_pool5.h5
+Loading: datasets/eccv16_dataset_ovp_google_pool5.h5
+Loading: datasets/eccv16_dataset_youtube_google_pool5.h5
+Loading splits from:  splits/summe_splits.json
+Selecting split:  0
+Loading model: data/models/summe_splits_0_0.47570115033520377.tar.pth
+Avg F-score:  0.47570115033520377
+
+Selecting split:  1
+Loading model: data/models/summe_splits_1_0.4532441838099789.tar.pth
+Avg F-score:  0.4532441838099789
+
+Selecting split:  2
+Loading model: data/models/summe_splits_2_0.46392187092332515.tar.pth
+Avg F-score:  0.46392187092332515
+
+Selecting split:  3
+Loading model: data/models/summe_splits_3_0.5637243258371596.tar.pth
+Avg F-score:  0.5637243258371596
+
+Selecting split:  4
+Loading model: data/models/summe_splits_4_0.5249340590955511.tar.pth
+Avg F-score:  0.5249340590955511
+
+Total AVG F-score:  0.4963051180002437
+
+
+Loading: datasets/eccv16_dataset_summe_google_pool5.h5
+Loading: datasets/eccv16_dataset_tvsum_google_pool5.h5
+Loading: datasets/eccv16_dataset_ovp_google_pool5.h5
+Loading: datasets/eccv16_dataset_youtube_google_pool5.h5
+Loading splits from:  splits/tvsum_aug_splits.json
+Selecting split:  0
+Loading model: data/models/tvsum_aug_splits_0_0.6328304729233908.tar.pth
+Avg F-score:  0.6328304729233908
+
+Selecting split:  1
+Loading model: data/models/tvsum_aug_splits_1_0.6059793418308115.tar.pth
+Avg F-score:  0.6059793418308115
+
+Selecting split:  2
+Loading model: data/models/tvsum_aug_splits_2_0.6197595383836808.tar.pth
+Avg F-score:  0.6197595383836808
+
+Selecting split:  3
+Loading model: data/models/tvsum_aug_splits_3_0.639623427142229.tar.pth
+Avg F-score:  0.639623427142229
+
+Selecting split:  4
+Loading model: data/models/tvsum_aug_splits_4_0.624663257236588.tar.pth
+Avg F-score:  0.624663257236588
+
+Total AVG F-score:  0.62457120750334
+
+
+Loading: datasets/eccv16_dataset_summe_google_pool5.h5
+Loading: datasets/eccv16_dataset_tvsum_google_pool5.h5
+Loading: datasets/eccv16_dataset_ovp_google_pool5.h5
+Loading: datasets/eccv16_dataset_youtube_google_pool5.h5
+Loading splits from:  splits/summe_aug_splits.json
+Selecting split:  0
+Loading model: data/models/summe_aug_splits_0_0.5122454899922037.tar.pth
+Avg F-score:  0.5122454899922037
+
+Selecting split:  1
+Loading model: data/models/summe_aug_splits_1_0.5858084051379817.tar.pth
+Avg F-score:  0.5858084051379817
+
+Selecting split:  2
+Loading model: data/models/summe_aug_splits_2_0.47047338207156864.tar.pth
+Avg F-score:  0.47047338207156864
+
+Selecting split:  3
+Loading model: data/models/summe_aug_splits_3_0.49019728744247376.tar.pth
+Avg F-score:  0.49019728744247376
+
+Selecting split:  4
+Loading model: data/models/summe_aug_splits_4_0.4967810509407774.tar.pth
+Avg F-score:  0.4967810509407774
+
+Total AVG F-score:  0.511101123117001
+
+Final Results:
+------------------------------------------------------
+  No   Split                                Mean F-score
+======================================================
+  1    splits/tvsum_splits.json             61.428% 
+  2    splits/summe_splits.json             49.631% 
+  3    splits/tvsum_aug_splits.json         62.457% 
+  4    splits/summe_aug_splits.json         51.11%  
+------------------------------------------------------
+```
+可见二者模型推理结果是一致的。
 ## 修改代码整理
-修改了<code>kanpsack.py</code>：
+### kanpsack.py
 
 导入库部分：
 ```python
@@ -249,3 +423,19 @@ def knapsack_ortools(values, weights, items, capacity ):
 
 ```
 其中注释掉的部分是原本的内容。
+### main.py
+修改后版本见<code>main_multiPlatform.py</code>
+主要内容涉及：
+```python
+if torch.cuda.is_available():               # 依据平台情况决策使用CUDA（如果正确配置了ROCm，torch也会将其识别为CUDA API）或者MPS（Apple）
+    device = torch.device('cuda')
+elif torch.backends.mps.is_available():
+    device = torch.device('mps')
+else:
+    device = torch.device('cpu')
+```
+以及形如：
+```python
+seq = seq.float().to(device)
+```
+的修改
