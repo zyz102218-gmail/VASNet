@@ -1,6 +1,15 @@
 # 运行环境修正说明
-## 前言
+## 摘要
+### 适配新版ortools
 VASNET这个库的版本比较老旧，其中使用了谷歌的<code>ortools</code>库来作为常用算法的直接调用的集合。这个库更新非常频繁，其中许多语句写法更新很快。所幸其中的算法并没有减少，只是修改了名称。我参考其官方文档，重写了<code>knapsack.py</code>中的部分函数用法，使其在当前主流环境下可以运行，且功能上没有问题。
+
+### 多平台运行与训练适配
+Torch是具备跨版本能力的，经过测试我们发现现版本torch可以正常加载模型并实现推理，因此对torch的代码改动很少。
+
+结合近期torch集成的多类后端API自动适应能力，我们对main中的部分代码进行了修改，添加了自适应平台能力。目前支持NVIDIA CUDA, AMD ROCm（未测试）和Apple Silicon MPS平台对模型进行推理和训练。值得注意的是，因为 PyTorch 将 ROCm 作为其 CUDA API 的一个后端实现，所以代码中仍然使用 "cuda" 来代表 AMD GPU。因此在代码中看不到ROCm的具体实现。这一部分修改在main_multiPlatform.py中，并没有直接对main.py进行修改。
+
+但值得注意的是，不同模型对不同平台的适应性可能有差异。VASNET本身是一个较为老旧的模型，其使用的torch特性也已经相对稳定，而新的模型可能会使用新的torch特性，某些torch特性在不同平台上可能有不同实现，甚至没有实现。因此需要特别注意，本工作的内容不一定适用于其他模型的运行与移植。
+
 
 参考文档：[ortools-官方文档](https://or-tools.github.io/docs/pdoc/ortools/algorithms/python/knapsack_solver.html#KnapsackSolver)
 
