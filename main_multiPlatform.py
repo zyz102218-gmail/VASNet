@@ -20,6 +20,8 @@ from config import  *
 from sys_utils import *
 from vsum_tools import  *
 from vasnet_model import  *
+import shutil
+import glob
 
 if torch.cuda.is_available():               # 依据平台情况决策使用CUDA（如果正确配置了ROCm，torch也会将其识别为CUDA API）或者MPS（Apple）
     device = torch.device('cuda')
@@ -389,8 +391,15 @@ def train(hps):
     os.makedirs(os.path.join(hps.output_dir, 'splits'), exist_ok=True)
     os.makedirs(os.path.join(hps.output_dir, 'code'), exist_ok=True)
     os.makedirs(os.path.join(hps.output_dir, 'models'), exist_ok=True)
-    os.system('cp -f splits/*.json  ' + hps.output_dir + '/splits/')
-    os.system('cp *.py ' + hps.output_dir + '/code/')
+    # Copy split files to output directory
+    split_files = glob.glob('splits/*.json')
+    for split_file in split_files:
+        shutil.copy(split_file, hps.output_dir + '/splits/')
+
+    # Copy all .py files to output directory
+    py_files = glob.glob('*.py')
+    for py_file in py_files:
+        shutil.copy(py_file, hps.output_dir + '/code/')
 
     # Create a file to collect results from all splits
     f = open(hps.output_dir + '/results.txt', 'wt')
@@ -429,8 +438,12 @@ def train(hps):
             log_file = os.path.join(hps.output_dir, 'models', log_dir) + '_' + str(fscore) + '.tar.pth'
 
             os.makedirs(os.path.join(hps.output_dir, 'models', ), exist_ok=True)
-            os.system('mv ' + hps.output_dir + '/models_temp/' + log_dir + '/' + str(fscore_epoch) + '_*.pth.tar ' + log_file)
-            os.system('rm -rf ' + hps.output_dir + '/models_temp/' + log_dir)
+            if os.name == 'nt':  # Windows
+                os.system('move ' + hps.output_dir + '/models_temp/' + log_dir + '/' + str(fscore_epoch) + '_*.pth.tar ' + log_file)
+                os.system('rmdir /s /q ' + hps.output_dir + '/models_temp/' + log_dir)
+            else:  # Unix
+                os.system('mv ' + hps.output_dir + '/models_temp/' + log_dir + '/' + str(fscore_epoch) + '_*.pth.tar ' + log_file)
+                os.system('rm -rf ' + hps.output_dir + '/models_temp/' + log_dir)
 
             print("Split: {0:}   Best F-score: {1:0.5f}   Model: {2:}".format(split_filename, fscore, log_file))
 
@@ -443,7 +456,7 @@ def train(hps):
 
 
 if __name__ == "__main__":
-    print_pkg_versions()
+    # print_pkg_versions()
 
     parser = argparse.ArgumentParser("PyTorch implementation of paper \"Summarizing Videos with Attention\"")
     parser.add_argument('-r', '--root', type=str, default='', help="Project root directory")

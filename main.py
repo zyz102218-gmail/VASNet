@@ -448,7 +448,7 @@ def train(hps):
 
 
 if __name__ == "__main__":
-    print_pkg_versions()
+    # print_pkg_versions()
 
     parser = argparse.ArgumentParser("PyTorch implementation of paper \"Summarizing Videos with Attention\"")
     parser.add_argument('-r', '--root', type=str, default='', help="Project root directory")
